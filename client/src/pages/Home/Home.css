@@ -9,9 +9,9 @@
     flex-direction: column;
     align-items: center;
     margin-top: -100%;
+    width: 30vw;
 }
 
-.homeInput{
-    width: 30vw;
-    margin-top: 30px;
+.homeTitle{
+    margin-bottom: 30px;
 }

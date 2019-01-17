@@ -1,5 +1,4 @@
 const youtubedl = require('ytdl-core');
-// const {google} = require('googleapis');
 const fs = require('fs');
 const path = require('path');
 const Song = require('../models/Song');
@@ -14,8 +13,7 @@ const getSong = (req, res) => {
       rstream.pipe(res);
     }
     else{
-      res.send("404 Error");
-      res.end();
+      res.status(400).json({err:"error"});
     }
   });
 }
@@ -33,10 +31,10 @@ const getSongList = (req, res) => {
 
 const downloadSong = (req, res) => {
   let {url, name, artist} = req.body;
+  console.log (url, name, artist);
   let full_name = artist.trim() + " - " + name.trim();
   let file = path.join(__dirname,'..', 'public','music');
   let output = file + '\\' + full_name + '.mp3';
-  // let videoUrl = 'http://www.youtube.com/watch?v=' + url;
   let videoReadableStream = youtubedl(url, { filter: 'audioonly'});
 
   videoReadableStream.on('info', function(info){
@@ -51,6 +49,7 @@ const downloadSong = (req, res) => {
     })
     newSong.save((err, song) => {
       if(err){
+        res.status(400).json(err);
         console.log(err);
       }else{
         res.status(200).json(song);

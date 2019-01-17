@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Input, Icon } from 'antd';
+import { YoutubeInputContainer } from '../../containers';
 
-import 'antd/dist/antd.css';
 import './Home.css';
 
 class Home extends Component{
@@ -9,8 +8,8 @@ class Home extends Component{
         return(
             <div className="home">
                 <div className="homeContent">
-                    <h1>Whisp</h1>
-                    <Input.Search className="homeInput" placeholder="Input Youtube Link" enterButton={<Icon type="cloud-download" />}/>
+                    <h1 className="homeTitle">Whisp</h1>
+                    <YoutubeInputContainer />
                 </div>
             </div>
         );

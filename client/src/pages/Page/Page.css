@@ -3,6 +3,11 @@
     display: flex;
 }
 
+.pageChildrenWrapper{
+    display: flex;
+    width: 100%;
+}
+
 .pageChildren{
     display: flex;
     justify-content: center;
@@ -11,4 +16,10 @@
 
 .pageNav{
     left: 0;
+}
+
+.musicPlayer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
