@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { play, pause } from '../_actions/MusicPlayerActions';
+import { play, pause, nextSong } from '../_actions/MusicPlayerActions';
 
 import { MusicPlayer } from '../components';
 
@@ -26,6 +26,9 @@ const mapDispatchToProps = dispatch => ({
     },
     pause:() => {
         dispatch(pause());
+    },
+    nextSong:() => {
+        dispatch(nextSong());
     }
 });
 

@@ -18,9 +18,11 @@ class NavBar extends Component{
     }
 
     render(){
-        const { Header, Content, Footer, Sider } = Layout;
+        const { Sider } = Layout;
         const SubMenu = Menu.SubMenu;
         let { collapsed } = this.state;
+        let { playlists } = this.props;
+        console.log(playlists);
         return(
             <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
@@ -36,12 +38,24 @@ class NavBar extends Component{
                             <span>Songs</span>
                         </Link>
                     </Menu.Item>
-                    <Menu.Item>
-                        <Link to ="/playlists/:name">
+                    <SubMenu title={
+                        <span>
                             <Icon type="read" />
                             <span>Playlists</span>
-                        </Link>
-                    </Menu.Item>
+                        </span>}>
+                        {
+                            playlists && playlists.map((playlist,key) => {
+                                return (
+                                <Menu.Item key={key}>
+                                    <Link to={`/playlists/${playlist.name}`}>
+                                        <Icon type="book" />
+                                        <span>{playlist.name}</span>
+                                    </Link>
+                                </Menu.Item>
+                                );
+                            })
+                        }
+                    </SubMenu>
                 </Menu>
             </Sider>
         );

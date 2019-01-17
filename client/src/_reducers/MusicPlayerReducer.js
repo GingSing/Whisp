@@ -37,7 +37,7 @@ export default function(state=initialState, action){
         case NEXT_SONG:
             return{
                 ...state,
-                songNumber: state.songNumber + 1 > state.songList.size - 1 ? 0 : state.songNumber++
+                songNumber: (state.songNumber + 1 > state.songList.length - 1) ? 0 : ++state.songNumber
             }
         case PREVIOUS_SONG:
             return{

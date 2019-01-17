@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Avatar, Skeleton, Icon } from 'antd';
+import { Avatar, Skeleton, Icon, Slider } from 'antd';
 
 import 'antd/dist/antd.css';
 import './MusicPlayer.css';
@@ -9,8 +9,10 @@ class MusicPlayer extends Component{
     constructor(props){
         super(props);
         this.play=this.play.bind(this);
+        this.next=this.next.bind(this);
+        this.handleVolumeChange=this.handleVolumeChange.bind(this);
         this.state ={
-            volume: 1,
+            volume: 0.5,
             src: ''
         }
     }
@@ -18,8 +20,9 @@ class MusicPlayer extends Component{
     componentDidMount(){
         let audio = document.getElementById("musicPlayerAudio");
         //play next song instead of playing same song
+        audio.volume = 0.5;
         audio.addEventListener('ended', function(e){
-            audio.play();
+            this.next();
         })
     }
 
@@ -70,17 +73,31 @@ class MusicPlayer extends Component{
         }, 8);
     }
 
+    async next(){
+        let { nextSong } = this.props;
+        await nextSong();
+        this.play();
+    }
+
+    handleVolumeChange(value){
+        let audio = document.getElementById("musicPlayerAudio");
+        audio.volume = value/100;
+    }
+
     render(){
 
         let { songList, songNumber } = this.props;
-
         return(
             <div className="musicPlayer">
                 {
                     songList[songNumber] ? <MusicInfo data={songList[songNumber]}/> : <Skeleton className="musicPlayerSkeleton" avatar paragraph={{ rows: 0 }} />
                 }
                 <div className="musicPlayerControls">
-            <button className="playBtn" onClick={this.play}>{this.props.playing && !this.props.paused ? <Icon type="pause" /> :<Icon type="caret-right" />}</button>
+                    <button className="prevBtn">{<Icon type="step-backward" />}</button>
+                    <button className="playBtn" onClick={this.play}>{this.props.playing && !this.props.paused ? <Icon type="pause" /> :<Icon type="caret-right" />}</button>
+                    <button className="nextBtn" onClick={this.next}>{<Icon type="step-forward" />}</button>
+                    <button className="loopBtn">{<Icon type="retweet" />}</button>
+                    <Slider className="volumeSlider" defaultValue={50} onChange={this.handleVolumeChange}/>
                 </div>
 
                 <audio id="musicPlayerAudio">

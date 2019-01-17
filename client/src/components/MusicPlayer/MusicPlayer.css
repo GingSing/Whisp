@@ -19,7 +19,15 @@
     border: none;
     outline: none;
     cursor: pointer;
+    font-size: 2em;
+    color: black;
 }
+
+.musicPlayerControls>button:hover{
+    color: #DCDCDC;
+    transition: all 0.2s ease;
+}
+
 .musicInfo{
     display: flex;
     width: 200px;
@@ -30,4 +38,9 @@
     display: flex;
     flex-direction: column;
     width: 80%;
+}
+
+.volumeSlider{
+    width: 10%;
+    margin-left: 10%;
 }

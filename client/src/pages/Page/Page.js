@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { Home, Playlist, Songs } from '../../pages';
 import { Switch, Route } from 'react-router-dom';
 import { NavBar } from '../../components';
-import { MusicPlayerContainer } from '../../containers';
+import { MusicPlayerContainer, NavBarContainer } from '../../containers';
 import './Page.css';
 
 class Page extends Component{
     render(){
         return(
             <div className="page">
-                <NavBar className="pageNav"/>
+                <NavBarContainer className="pageNav"/>
                 <div className="pageChildrenWrapper">
                     <div className="pageChildren">
                         <Switch>
