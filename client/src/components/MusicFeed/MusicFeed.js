@@ -7,11 +7,18 @@ class MusicFeed extends Component{
         return(
             <div className="musicFeed">
                 <ul className="musicFeedList">
+                    <li>
+                        <div className="listTopics">
+                            <span>Name</span>
+                            <span>Artist</span>
+                            <span>Length</span>
+                        </div>
+                    </li>
                     {
                         songList && songList.map((data, key) => {
                             return (
                             <li key={key}>
-                                <FeedCard data={data} handleClick={handleClick}/>
+                                <FeedCard data={data} handleClick={handleClick} songNumber={key} songList={songList}/>
                             </li>
                             );
                         })
@@ -22,12 +29,12 @@ class MusicFeed extends Component{
     }
 }
 
-const FeedCard = ({data, handleClick}) => {
+const FeedCard = ({data, songNumber, songList, handleClick}) => {
     return(
-        <div className="feedCard" onClick={() => {handleClick(data._id)}}>
-            <span>Name: {data.name} </span>
-            <span>Artist: {data.artist} </span>
-            <span>Length: {data.length_seconds}</span>
+        <div className="feedCard" onClick={() => {handleClick(songNumber, songList)}}>
+            <span>{data.name} </span>
+            <span>{data.artist} </span>
+            <span>{data.length_seconds}</span>
         </div>
     );
 }

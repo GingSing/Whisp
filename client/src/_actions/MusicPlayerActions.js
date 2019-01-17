@@ -1,6 +1,6 @@
 import { SET_SONG_AND_LIST, PLAY_MUSIC, STOP_MUSIC, PAUSE_MUSIC, NEXT_SONG, PREVIOUS_SONG, LOOP_SONG } from './types';
 
-export function setSong({songNumber, songList}){
+export function setSong(songNumber, songList){
     return dispatch => {
         dispatch({type: SET_SONG_AND_LIST, songNumber, songList});
     }

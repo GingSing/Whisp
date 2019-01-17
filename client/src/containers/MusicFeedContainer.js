@@ -10,8 +10,8 @@ class MusicFeedContainer extends Component{
         this.props.getSongList();
     }
 
-    handleClick(songId){
-        this.props.setSong(songId);
+    handleClick(songNumber, songList){
+        this.props.setSong(songNumber, songList);
     }
 
     render(){
@@ -36,8 +36,8 @@ const mapDispatchtoProps = dispatch => ({
     getSongList: () => {
         dispatch(getSongList());
     },
-    setSong: (songId) => {
-        dispatch(setSong(songId));
+    setSong: (songNumber, songList) => {
+        dispatch(setSong(songNumber, songList));
     }
 })
 

@@ -1,24 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { play } from '../_actions/MusicPlayerActions';
+import { play, pause } from '../_actions/MusicPlayerActions';
 
 import { MusicPlayer } from '../components';
 
 class MusicPlayerContainer extends Component{
     render(){
         return(
-            <MusicPlayer />
+            <MusicPlayer {...this.props} />
         );
     }
 }
 
 const mapStateToProps = state => ({
-    music: state.music
+    playing: state.music.playing,
+    paused: state.music.paused,
+    songList: state.music.songList,
+    songNumber: state.music.songNumber,
+    loop: state.music.loop
 });
 
 const mapDispatchToProps = dispatch => ({
     play:() => {
         dispatch(play());
+    },
+    pause:() => {
+        dispatch(pause());
     }
 });
 

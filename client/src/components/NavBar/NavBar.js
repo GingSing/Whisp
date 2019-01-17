@@ -37,8 +37,10 @@ class NavBar extends Component{
                         </Link>
                     </Menu.Item>
                     <Menu.Item>
-                        <Icon type="read" />
-                        <span>Playlists</span>
+                        <Link to ="/playlists/:name">
+                            <Icon type="read" />
+                            <span>Playlists</span>
+                        </Link>
                     </Menu.Item>
                 </Menu>
             </Sider>

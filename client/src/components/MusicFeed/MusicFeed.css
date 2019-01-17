@@ -17,7 +17,7 @@
 }
 
 .musicFeedList li:nth-child(even){
-    background-color: black;
+    background-color: #DCDCDC;
 }
 
 .feedCard{
@@ -25,8 +25,35 @@
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: space-around;
+}
+
+.feedCard>span{
+    width: 180px;
 }
 
 .feedCard:hover{
     cursor: pointer;
+    background-color: black;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.listTopics{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #003366;
+    color: white;
+}
+
+.listTopics>span{
+    width: 180px;
+    font-weight: bold;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
