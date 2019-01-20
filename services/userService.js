@@ -3,6 +3,7 @@ const MLAB_USER_ID = process.env.MLAB_USER_ID || require('../config').MLAB_USER_
 
 const getUser = (req, res) => {
     User.findOne({_id: MLAB_USER_ID})
+        .populate('playlists.songs')
         .then(user => res.status(200).json(user))
         .catch(err => {
             console.log(err);

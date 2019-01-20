@@ -1,7 +1,8 @@
-import { GET_USER_INFO_FAILURE, GET_USER_INFO_REQUEST, GET_USER_INFO_SUCCESS } from '../_actions/types';
+import { GET_USER_INFO_FAILURE, GET_USER_INFO_REQUEST, GET_USER_INFO_SUCCESS, ADD_PLAYLIST_REQUEST, ADD_PLAYLIST_FAILURE, ADD_PLAYLIST_SUCCESS } from '../_actions/types';
 
 let initialState = {
-    userInfo:{}
+    userInfo:{},
+    addingPlaylist: false
 }
 
 export default function(state=initialState, action){
@@ -21,6 +22,22 @@ export default function(state=initialState, action){
             return {
                 ...state,
                 gettingUserInfo: false
+            }
+        case ADD_PLAYLIST_REQUEST:
+            return {
+                ...state,
+                addingPlaylist: true
+            }
+        case ADD_PLAYLIST_SUCCESS:
+            return {
+                ...state,
+                addingPlaylist: false,
+                userInfo: action.info
+            }
+        case ADD_PLAYLIST_FAILURE:
+            return {
+                ...state,
+                addingPlaylist: false
             }
         default:
             return state;

@@ -16,14 +16,10 @@ class MusicFeedContainer extends Component{
 
     render(){
 
-        let style = {
-            width: "100%",
-        }
-
         return(
-            <div className="musicFeedContainer" style={style}>
+            <React.Fragment>
                 <MusicFeed songList={this.props.songList} handleClick={this.handleClick.bind(this)} />
-            </div>
+            </React.Fragment>
         );
     }
 }

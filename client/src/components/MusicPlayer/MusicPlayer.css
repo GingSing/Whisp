@@ -1,20 +1,33 @@
 .musicPlayer{
-    width: 100%;
     display: flex;
     border-top: 1px solid #DCDCDC;
+    justify-content: space-between;
+    overflow:hidden;
+}
+
+.musicPlayer>*{
+    width: 300px;
+}
+
+.musicPlayerSkeleton{
+    display: flex;
+    align-items: center;
 }
 
 .musicPlayerControls{
     display: flex;
+    flex-direction: column;
+}
+
+.musicPlayerButtons{
+    display: grid;
+    grid-template-areas: 
+    "button button button button"
+    "progress progress progress progress";
     justify-content: center;
-    width: 80%;
 }
 
-.musicPlayerSkeleton{
-    width: 200px;
-}
-
-.musicPlayerControls>button{
+.musicPlayerButtons>button{
     background-color: inherit;
     border: none;
     outline: none;
@@ -23,24 +36,57 @@
     color: black;
 }
 
-.musicPlayerControls>button:hover{
+.musicPlayerButtons>button:hover{
     color: #DCDCDC;
     transition: all 0.2s ease;
 }
 
+.musicPlayerProgress{
+    display: flex;
+    justify-content: space-between;
+}
+
+.musicPlayerProgress>span{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .musicInfo{
     display: flex;
-    width: 200px;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 250px
 }
 
 .musicInfoCard{
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 150px;
 }
 
-.volumeSlider{
-    width: 10%;
-    margin-left: 10%;
+.musicPlayerVolume{
+    margin-right: 8%;
+}
+
+.musicInfoImg{
+    height: 64px;
+    width: auto;
+    display: flex;
+}
+
+.musicPlayerSlider{
+    display: flex;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    height: 15px;
+}
+
+.musicPlayerSlider{
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+.sliders{
+    width: 100%;
 }

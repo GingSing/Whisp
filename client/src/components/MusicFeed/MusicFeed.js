@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Icon } from 'antd';
+
+import 'antd/lib/date-picker/style/css'; 
 import './MusicFeed.css';
 
 class MusicFeed extends Component{
@@ -9,6 +12,7 @@ class MusicFeed extends Component{
                 <ul className="musicFeedList">
                     <li>
                         <div className="listTopics">
+                            <span></span>
                             <span>Name</span>
                             <span>Artist</span>
                             <span>Length</span>
@@ -30,11 +34,13 @@ class MusicFeed extends Component{
 }
 
 const FeedCard = ({data, songNumber, songList, handleClick}) => {
+    let { name, artist, length_seconds } = data;
     return(
         <div className="feedCard" onClick={() => {handleClick(songNumber, songList)}}>
-            <span>{data.name} </span>
-            <span>{data.artist} </span>
-            <span>{data.length_seconds}</span>
+            <button><Icon type="caret-right" /></button>
+            <span>{name} </span>
+            <span>{artist} </span>
+            <span>{length_seconds}</span>
         </div>
     );
 }

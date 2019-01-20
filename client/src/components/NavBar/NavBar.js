@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import 'antd/dist/antd.css';
+import './NavBar.css';
 
 class NavBar extends Component{
     constructor(props){
@@ -21,12 +23,11 @@ class NavBar extends Component{
         const { Sider } = Layout;
         const SubMenu = Menu.SubMenu;
         let { collapsed } = this.state;
-        let { playlists } = this.props;
-        console.log(playlists);
+        let { playlists, showModal } = this.props;
         return(
             <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                    <Menu.Item key="1">
+                <Menu theme="dark" defaultSelectedKeys={['-1']} mode="inline">
+                    <Menu.Item key="-1">
                         <Link to="/">
                             <Icon type="home" />
                             <span>Home</span>
@@ -44,10 +45,10 @@ class NavBar extends Component{
                             <span>Playlists</span>
                         </span>}>
                         {
-                            playlists && playlists.map((playlist,key) => {
+                            playlists && playlists.map((playlist, key) => {
                                 return (
                                 <Menu.Item key={key}>
-                                    <Link to={`/playlists/${playlist.name}`}>
+                                    <Link to={`/playlists/${key}`}>
                                         <Icon type="book" />
                                         <span>{playlist.name}</span>
                                     </Link>
@@ -55,11 +56,19 @@ class NavBar extends Component{
                                 );
                             })
                         }
+                        <Menu.Item onClick={showModal}>
+                            <Icon type="plus-square" />
+                            <span className="addPlaylist">Add Playlist</span>
+                        </Menu.Item>
                     </SubMenu>
                 </Menu>
             </Sider>
         );
     }
+}
+
+NavBar.propTypes = {
+    playlists: PropTypes.array
 }
 
 export default NavBar;

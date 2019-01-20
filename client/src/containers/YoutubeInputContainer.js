@@ -52,11 +52,8 @@ class YoutubeInputContainer extends Component{
     }
 
     render(){
-        let style = {
-            width: '100%'
-        }
         return(
-            <div className="youtubeInputContainer" style={style}>
+            <React.Fragment>
                 <YoutubeInput showModal={this.showModal} />
                 <Modal
                     title="Meta Data"
@@ -69,7 +66,7 @@ class YoutubeInputContainer extends Component{
                     <span>Song Name: </span>
                     <input name="name" onChange={this.handleChange} />
                 </Modal>
-            </div>
+            </React.Fragment>
         );
     }
 }

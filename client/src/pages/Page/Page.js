@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Home, Playlist, Songs } from '../../pages';
 import { Switch, Route } from 'react-router-dom';
-import { NavBar } from '../../components';
 import { MusicPlayerContainer, NavBarContainer } from '../../containers';
 import './Page.css';
 
@@ -15,10 +14,11 @@ class Page extends Component{
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/songs" component={Songs} />
-                            <Route path="/Playlist/:name" component={Playlist} />
+                            <Route path="/playlists/:key" component={Playlist} />
                         </Switch>
+                        
+                        <MusicPlayerContainer className="musicPlayer" />
                     </div>
-                    <MusicPlayerContainer className="musicPlayer" />
                 </div>
             </div>    
         );

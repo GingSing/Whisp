@@ -9,7 +9,9 @@ const songSchema = new Schema({
     file_name: { type: String, required: true, unique: true},
     file_url: {type: String, required: true, unique: true},
     length_seconds: { type: Number, required: true },
-    date_downloaded: { type: Date, default: Date.now }
+    date_downloaded: { type: Date, default: Date.now },
+    thumbnail_url: {type: String },
+    youtube_url: {type: String, require: true, unique: true}
 });
 
 module.exports = mongoose.model("Song", songSchema);

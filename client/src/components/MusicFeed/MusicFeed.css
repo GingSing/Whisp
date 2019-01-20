@@ -28,8 +28,17 @@
     justify-content: space-around;
 }
 
-.feedCard>span{
+.feedCard>*{
     width: 180px;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0;
+}
+
+.feedCard>button{
+    display: flex;
+    justify-content: center;
 }
 
 .feedCard:hover{
@@ -49,7 +58,7 @@
     color: white;
 }
 
-.listTopics>span{
+.listTopics>*{
     width: 180px;
     font-weight: bold;
     -webkit-user-select: none; /* Safari */        

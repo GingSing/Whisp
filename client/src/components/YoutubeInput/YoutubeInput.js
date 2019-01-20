@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Input, Icon } from 'antd';
+import PropTypes from 'prop-types';
 
 import 'antd/dist/antd.css';
 import './YoutubeInput.css';
@@ -12,5 +13,9 @@ class YoutubeInput extends Component{
         );
     }
 }
+
+YoutubeInput.propTypes = {
+    showModal: PropTypes.func
+};
 
 export default YoutubeInput;
