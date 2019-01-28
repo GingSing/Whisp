@@ -5,6 +5,8 @@ Personal project for downloading and listening to music from youtube.
 The point of this project is so that users can listen to songs from youtube that might be appear on spotify or other popular music streaming apps.
 Although many music apps boast a large amount of media access, there are still times at which a user may want to listen to songs that their favorite youtube creator has made or a song that isn't popular enough to put itself onto their radars. Users will be able to download these songs and have it saved on a remote server or their own personal computers.
 
+This project uses: ReactJS + Redux + Ant Design in the front end and NodeJS + MongoDB + Express for the backend. The entire project was created by me save a regex function in one of the redux actions.
+
 # Current Features
 
 1. Can download songs from youtube and listen to other songs while doing so
