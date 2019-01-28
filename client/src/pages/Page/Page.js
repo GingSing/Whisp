@@ -5,6 +5,10 @@ import { MusicPlayerContainer, NavBarContainer } from '../../containers';
 import './Page.css';
 
 class Page extends Component{
+    constructor(){
+        super();
+        this.audio = new Audio();
+    }
     render(){
         return(
             <div className="page">
@@ -17,7 +21,7 @@ class Page extends Component{
                             <Route path="/playlists/:key" component={Playlist} />
                         </Switch>
                         
-                        <MusicPlayerContainer className="musicPlayer" />
+                        <MusicPlayerContainer audio={this.audio} className="musicPlayer" />
                     </div>
                 </div>
             </div>    

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Icon } from 'antd';
+import PropTypes from 'prop-types';
 
 import 'antd/lib/date-picker/style/css'; 
 import './MusicFeed.css';
@@ -43,6 +44,18 @@ const FeedCard = ({data, songNumber, songList, handleClick}) => {
             <span>{length_seconds}</span>
         </div>
     );
+}
+
+MusicFeed.propTypes={
+    songList: PropTypes.array,
+    handleClick: PropTypes.func
+}
+
+FeedCard.propTypes={
+    data: PropTypes.object,
+    songNumber: PropTypes.number,
+    songList: PropTypes.array,
+    handleClick: PropTypes.func
 }
 
 export default MusicFeed;

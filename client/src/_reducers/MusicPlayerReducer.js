@@ -42,7 +42,7 @@ export default function(state=initialState, action){
         case PREVIOUS_SONG:
             return{
                 ...state,
-                songNumber: state.songNumber - 1 < 0 ? state.songList.size - 1 : state.songNumber--
+                songNumber: state.songNumber - 1 < 0 ? state.songList.length - 1 : --state.songNumber
             }
         case LOOP_SONG:
             return {

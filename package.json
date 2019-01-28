@@ -9,7 +9,8 @@
     "start": "node server.js",
     "cluster": "nodemon cluster.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "cluster-dev": "concurrently \"npm run cluster\" \"npm run client\""
   },
   "keywords": [],
   "author": "",

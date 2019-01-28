@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
-import { Avatar, Skeleton, Icon, Slider, Progress } from 'antd';
+import {Avatar, Skeleton, Icon, Slider, Progress } from 'antd';
+import { Play, Next, Prev } from '../Buttons';
 import PropTypes from 'prop-types';
 
 import 'antd/dist/antd.css';
@@ -10,8 +10,7 @@ import './MusicPlayer.css';
 class MusicPlayer extends Component{
     constructor(props){
         super(props);
-        this.play=this.play.bind(this);
-        this.next=this.next.bind(this);
+        this.setSrc=this.setSrc.bind(this);
         this.updateDuration=this.updateDuration.bind(this);
         this.timeFormatter=this.timeFormatter.bind(this);
         this.changeCurrentTime=this.changeCurrentTime.bind(this);
@@ -27,75 +26,32 @@ class MusicPlayer extends Component{
             mouseValue: 0
         }
     }
-
     componentDidMount(){
         //play next song instead of playing same song
-        this.audio.volume = 0.5;
-        this.audio.addEventListener('ended', this.next);
+        this.props.audio.volume = 0.5;
+        this.props.audio.addEventListener('ended', this.next);
     }
 
-    async play(){
-        let { songList, songNumber, play, pause } = this.props;
-        if(!songList[songNumber]){
-            return;
-        }
-        let currSrc = "http://localhost:5000" + songList[songNumber].file_url.split(" ").join("%20");
-        if(this.state.src !== currSrc){
-            this.audio.src = currSrc;
-            this.setState({
-                src: currSrc
-            });
-        }
+    // dropVolume(){
+    //     this.setState({ volume: Math.round(this.props.audio.volume * 10)/10 });
+    // }
 
-        if(this.audio.paused){
-            this.audio.play();
-            this.unpause();
-            await play(); // sets the state in redux
-        }else{
-            this.pause();
-            await pause();
-        }
-    }
-
-    async pause(){
-        await this.setState({ volume: Math.round(this.audio.volume * 10)/10 });
-        
-        let interval = setInterval(()=>{
-            if(this.audio.volume > 0.1){
-                this.audio.volume -= 0.1;
-            }else{
-                clearInterval(interval);
-                this.audio.pause();
-            }
-        }, 8);
-    }
-
-    async unpause(){
-        let interval = setInterval(()=>{
-            if(this.audio.volume < this.state.volume){
-                this.audio.volume += 0.1;
-            }else{
-                clearInterval(interval);
-            }
-        }, 8);
-    }
-
-    async next(){
-        let { nextSong } = this.props;
-        await nextSong();
-        this.play();
+    setSrc(currSrc){
+        this.setState({
+            src:currSrc
+        });
     }
 
     handleVolumeChange(value){
-        this.audio.volume = value/100;
+        this.props.audio.volume = value/100;
     }
 
     updateDuration(){
         this.setState({
-            songCurrentTime: this.audio.currentTime,
-            songDuration: this.audio.duration,
-            currDuration: (this.audio.currentTime/this.audio.duration) * 100,
-            mouseValue: this.audio.currentTime
+            songCurrentTime: this.props.audio.currentTime,
+            songDuration: this.props.audio.duration,
+            currDuration: (this.props.audio.currentTime/this.props.audio.duration) * 100,
+            mouseValue: this.props.audio.currentTime
         });
     }
 
@@ -127,18 +83,17 @@ class MusicPlayer extends Component{
         this.setState({
             slidersChanging: false
         }, async() => {
-            this.audio.currentTime=mouseValue;
+            this.props.audio.currentTime=mouseValue;
             await this.setState({
                 songCurrentTime: mouseValue,
-                currDuration: (this.audio.currentTime/this.audio.duration) * 100
+                currDuration: (this.props.audio.currentTime/this.props.audio.duration) * 100
             })
         });
     }
 
     render(){
-        let { songList, songNumber } = this.props;
-        let { currDuration, songDuration, songCurrentTime, slidersChanging, mouseValue } = this.state;
-        console.log(songDuration/600);
+        let { songList, songNumber, play, nextSong, audio, prevSong } = this.props;
+        let { currDuration, songDuration, songCurrentTime, slidersChanging, mouseValue, src, volume } = this.state;
         return(
             <div className="musicPlayer">
                 {
@@ -146,9 +101,9 @@ class MusicPlayer extends Component{
                 }
                 <div className="musicPlayerControls">
                     <div className="musicPlayerButtons">
-                        <button className="prevBtn">{<Icon type="step-backward" />}</button>
-                        <button className="playBtn" onClick={this.play}>{this.props.playing && !this.props.paused ? <Icon type="pause" /> :<Icon type="caret-right" />}</button>
-                        <button className="nextBtn" onClick={this.next}>{<Icon type="step-forward" />}</button>
+                        <Prev play={play} audio={audio} prevSong={prevSong} setSrc={this.setSrc} songNumber={this.props.songNumber} songList={this.props.songList} src={src}/>
+                        <Play {...this.props} src={src} volume={volume} setSrc={this.setSrc}/>
+                        <Next play={play} audio={audio} nextSong={nextSong} setSrc={this.setSrc} songNumber={this.props.songNumber} songList={this.props.songList} src={src}/>
                         <button className="loopBtn">{<Icon type="retweet" />}</button>
                     </div>
                     <div className="musicPlayerProgress">
@@ -172,10 +127,6 @@ class MusicPlayer extends Component{
                 <div className="musicPlayerVolume">
                     <Slider className="volumeSlider" defaultValue={50} onChange={this.handleVolumeChange}/>
                 </div>
-
-                <audio id="musicPlayerAudio" ref={elem => this.audio = elem} onTimeUpdate={this.updateDuration}>
-                    <source src="" type="audio/mp3" />
-                </audio>
             </div>
         );
     }
@@ -197,8 +148,15 @@ const MusicInfo = ({data, timeFormatter}) => {
 }
 
 MusicPlayer.propTypes = {
+    audio: PropTypes.object,
+    play: PropTypes.func,
+    pause: PropTypes.func,
     songList: PropTypes.array,
-    songNumber: PropTypes.number
+    src: PropTypes.string,
+    setSrc: PropTypes.func,
+    songNumber: PropTypes.number,
+    playing: PropTypes.bool,
+    paused: PropTypes.bool
 }
 
 MusicInfo.propTypes = {
