@@ -23,6 +23,7 @@ class MusicPlayer extends Component{
 
     handleVolumeChange(value){
         this.props.setVolume(value/100);
+        console.log(value/100);
     }
 
     timeFormatter(timeInSeconds){
@@ -47,10 +48,11 @@ class MusicPlayer extends Component{
                         <Next />
                         <Loop />
                     </div>
+                    <ProgressBar />
                 </div>
-                <ProgressBar />
                 <div className="musicPlayerVolume">
-                    <Slider className="volumeSlider" defaultValue={50} onChange={this.handleVolumeChange}/>
+                        {/* volume starts at 50 on startup (will change when users are implemented)*/}
+                    <Slider className="musicPlayerSlider" defaultValue={50} onChange={this.handleVolumeChange}/>
                 </div>
             </div>
         );

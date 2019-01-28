@@ -66,27 +66,19 @@
 
 .musicPlayerVolume{
     margin-right: 8%;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    border: 1px solid red;
+}
+
+.musicPlayerSlider{
+    width: 100%;
+    margin: 0;
 }
 
 .musicInfoImg{
     height: 64px;
     width: auto;
     display: flex;
-}
-
-.musicPlayerSlider{
-    display: flex;
-    align-content: center;
-    align-items: center;
-    width: 100%;
-    height: 15px;
-}
-
-.musicPlayerSlider{
-    display: flex;
-    align-content: center;
-    align-items: center;
-}
-.sliders{
-    width: 100%;
 }
