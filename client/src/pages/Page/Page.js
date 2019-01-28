@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Home, Playlist, Songs } from '../../pages';
+import { Home, Playlist, Songs, Favourites } from '../../pages';
 import { Switch, Route } from 'react-router-dom';
 import { MusicPlayerContainer, NavBarContainer } from '../../containers';
 import './Page.css';
@@ -18,6 +18,7 @@ class Page extends Component{
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route path="/songs" component={Songs} />
+                            <Route path="/favourites" component={Favourites} />
                             <Route path="/playlists/:key" component={Playlist} />
                         </Switch>
                         

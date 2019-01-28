@@ -1,4 +1,4 @@
-import { SET_SONG_AND_LIST, PLAY_MUSIC, STOP_MUSIC, PAUSE_MUSIC, NEXT_SONG, PREVIOUS_SONG, LOOP_SONG, SET_AUDIO, SET_SRC, SET_VOLUME } from '../_actions/types';
+import { SET_SONG_AND_LIST, PLAY_MUSIC, STOP_MUSIC, PAUSE_MUSIC, NEXT_SONG, PREVIOUS_SONG, LOOP_SONG, SET_AUDIO, SET_SRC, SET_VOLUME, SET_USER_VOLUME } from '../_actions/types';
 
 let initialState = {
     audio: null,
@@ -6,11 +6,17 @@ let initialState = {
     paused: true,
     songList: [],
     songNumber: 0,
-    loop: false
+    loop: false,
+    userVolume: 0.5
 }
 
 export default function(state=initialState, action){
     switch(action.type){
+        case SET_USER_VOLUME:
+            return {
+                ...state,
+                userVolume: action.volume
+            }
         case SET_VOLUME:
             if(state.audio){
                 state.audio.volume = action.volume;

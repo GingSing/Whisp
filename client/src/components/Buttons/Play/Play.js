@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { play, pause, setSrc, setVolume } from '../../../_actions/MusicPlayerActions';
+import { play, pause, setSrc, setVolume, setUserVolume } from '../../../_actions/MusicPlayerActions';
 import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 
@@ -12,9 +12,6 @@ class Play extends Component{
         this.play=this.play.bind(this);
         this.pause=this.pause.bind(this);
         this.unpause=this.unpause.bind(this);
-        this.state={
-            stateVolume: 0.5
-        }
     }
     
     async play(){
@@ -36,10 +33,8 @@ class Play extends Component{
     }
 
     async pause(){
-        let { audio, setVolume, pause } = this.props;
-        this.setState({
-            volume: audio.volume
-        });
+        let { audio, setVolume, pause, setUserVolume } = this.props;
+        setUserVolume(audio.volume);
         let interval = setInterval(()=>{
             if(audio.volume > 0.05){
                 setVolume(audio.volume - 0.05);
@@ -52,9 +47,8 @@ class Play extends Component{
 
     async unpause(){
         let { audio, setVolume } = this.props;
-        let { stateVolume } = this.state;
         let interval = setInterval(()=>{
-            if(audio.volume < stateVolume){
+            if(audio.volume < this.props.userVolume){
                 setVolume(audio.volume + 0.05);
             }else{
                 clearInterval(interval);
@@ -75,7 +69,8 @@ Play.propTypes={
     src: PropTypes.string,
     songNumber: PropTypes.number,
     playing: PropTypes.bool,
-    paused: PropTypes.bool
+    paused: PropTypes.bool,
+    userVolume: PropTypes.number
 }
 
 const mapStateToProps = state => ({
@@ -84,7 +79,8 @@ const mapStateToProps = state => ({
     songNumber: state.music.songNumber,
     paused: state.music.paused,
     playing: state.music.playing,
-    src: state.music.src
+    src: state.music.src,
+    userVolume: state.music.userVolume
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -99,6 +95,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setVolume: (volume) => {
         dispatch(setVolume(volume));
+    },
+    setUserVolume: (volume) => {
+        dispatch(setUserVolume(volume));
     }
 })
 

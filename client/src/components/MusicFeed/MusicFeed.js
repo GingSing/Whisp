@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Icon } from 'antd';
+import { Icon, Dropdown, Button, Menu } from 'antd';
 import PropTypes from 'prop-types';
 
 import 'antd/lib/date-picker/style/css'; 
 import './MusicFeed.css';
 
 class MusicFeed extends Component{
+
     render(){
-        let { songList, handleClick } = this.props;
+        let { songList, handleClick, playSong } = this.props;
         return(
             <div className="musicFeed">
                 <ul className="musicFeedList">
@@ -23,7 +24,12 @@ class MusicFeed extends Component{
                         songList && songList.map((data, key) => {
                             return (
                             <li key={key}>
-                                <FeedCard data={data} handleClick={handleClick} songNumber={key} songList={songList}/>
+                                <FeedCard 
+                                    data={data} 
+                                    handleClick={handleClick} 
+                                    songNumber={key} 
+                                    songList={songList} 
+                                    playSong={playSong}/>
                             </li>
                             );
                         })
@@ -34,28 +40,46 @@ class MusicFeed extends Component{
     }
 }
 
-const FeedCard = ({data, songNumber, songList, handleClick}) => {
+const FeedCard = ({data, songNumber, songList, handleClick, playSong}) => {
     let { name, artist, length_seconds } = data;
     return(
-        <div className="feedCard" onClick={() => {handleClick(songNumber, songList)}}>
-            <button><Icon type="caret-right" /></button>
-            <span>{name} </span>
-            <span>{artist} </span>
-            <span>{length_seconds}</span>
+        <div className="feedCardContainer">
+            <button className="feedCardPlay" onClick={() => {playSong(songNumber, songList)}}>{<Icon type="caret-right" />}</button>
+            <div className="feedCard" onClick={() => {handleClick(songNumber, songList)}}>
+                <span>{name} </span>
+                <span>{artist} </span>
+                <span>{length_seconds}</span>
+            </div>
+            <Dropdown overlay={FeedCardMenu} placement="topLeft"><Button>...</Button></Dropdown>
         </div>
     );
 }
 
+const FeedCardMenu = (
+    <Menu>
+        <Menu.Item>
+            Add To Favorites
+        </Menu.Item>
+        <Menu.Item>
+            Add To Playlist 
+        </Menu.Item>
+    </Menu>
+)
+
 MusicFeed.propTypes={
     songList: PropTypes.array,
-    handleClick: PropTypes.func
+    handleClick: PropTypes.func,
+    playSong: PropTypes.func,
+    paused: PropTypes.bool
 }
 
 FeedCard.propTypes={
     data: PropTypes.object,
     songNumber: PropTypes.number,
     songList: PropTypes.array,
-    handleClick: PropTypes.func
+    handleClick: PropTypes.func,
+    playSong: PropTypes.func,
+    paused: PropTypes.bool
 }
 
 export default MusicFeed;

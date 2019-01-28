@@ -1,11 +1,15 @@
 add function of adding songs to playlist on songs
 see what is the end product after downloading a song
 mobile friendly
-loop button
-fix the buttons so that they work with themselves with connect
-separate the musicplayer file
 fix naming conventions 
-add proptypes
+fix proptypes
 test files
-
 add users and passport
+make favourites page functional
+make home box into a list so can show multiple songs being downloaded
+
+DONELIST
+loop button
+separate the musicplayer file
+add proptypes
+fix the buttons so that they work with themselves with connect

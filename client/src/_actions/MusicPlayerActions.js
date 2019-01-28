@@ -1,8 +1,14 @@
-import { SET_SONG_AND_LIST, PLAY_MUSIC, STOP_MUSIC, PAUSE_MUSIC, NEXT_SONG, PREVIOUS_SONG, LOOP_SONG, SET_AUDIO, SET_SRC, SET_VOLUME } from './types';
+import { SET_SONG_AND_LIST, PLAY_MUSIC, STOP_MUSIC, PAUSE_MUSIC, NEXT_SONG, PREVIOUS_SONG, LOOP_SONG, SET_AUDIO, SET_SRC, SET_VOLUME, SET_USER_VOLUME } from './types';
 
 export function setVolume(volume){
     return dispatch => {
         dispatch({type: SET_VOLUME, volume});
+    }
+}
+
+export function setUserVolume(volume){
+    return dispatch => {
+        dispatch({type: SET_USER_VOLUME, volume});
     }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { nextSong, setSrc, play, setAudio } from '../../../_actions/MusicPlayerActions';
+import { nextSong, setSrc, play, setAudio, setVolume } from '../../../_actions/MusicPlayerActions';
 import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 
@@ -29,6 +29,14 @@ class Next extends Component{
             await setSrc(currSrc);
         }
         play();
+        let { audio, setVolume } = this.props;
+        let interval = setInterval(()=>{
+            if(audio.volume < this.props.userVolume){
+                setVolume(audio.volume + 0.05);
+            }else{
+                clearInterval(interval);
+            }
+        }, 11);
     }
 
     render(){
@@ -42,14 +50,16 @@ Next.propTypes={
     audio: PropTypes.object,
     src: PropTypes.string,
     songList: PropTypes.array,
-    songNumber: PropTypes.number
+    songNumber: PropTypes.number,
+    userVolume: PropTypes.number
 }
 
 const mapStateToProps = state => ({
     audio: state.music.audio,
     src: state.music.src,
     songList: state.music.songList,
-    songNumber: state.music.songNumber
+    songNumber: state.music.songNumber,
+    userVolume: state.music.userVolume
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -64,6 +74,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setAudio: (audio) => {
         dispatch(setAudio(audio));
+    },
+    setVolume: (volume) => {
+        dispatch(setVolume(volume));
     }
 });
 

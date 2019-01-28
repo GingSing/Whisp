@@ -15,7 +15,8 @@ export const PREVIOUS_SONG = 'PREVIOUS_SONG';
 export const LOOP_SONG = 'LOOP_SONG';
 export const SET_AUDIO = 'SET_AUDIO';
 export const SET_SRC = 'SET_SRC';
-export const SET_VOLUME = ' SET_VOLUME';
+export const SET_VOLUME = 'SET_VOLUME';
+export const SET_USER_VOLUME= 'SET_USER_VOLUME';
 
 export const GET_SONGLIST_REQUEST = 'GET_SONGLIST_REQUEST';
 export const GET_SONGLIST_SUCCESS = 'GET_SONGLIST_SUCCESS';

@@ -36,9 +36,18 @@
     padding: 0;
 }
 
-.feedCard>button{
+.feedCardContainer{
     display: flex;
     justify-content: center;
+}
+
+.feedCardPlay{
+    cursor: pointer;
+    width: 180px;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0;
 }
 
 .feedCard:hover{

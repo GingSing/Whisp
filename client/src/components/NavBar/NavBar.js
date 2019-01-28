@@ -39,6 +39,12 @@ class NavBar extends Component{
                             <span>Songs</span>
                         </Link>
                     </Menu.Item>
+                    <Menu.Item>
+                        <Link to="/favourites">
+                            <Icon type="meh" />
+                            <span>Favourites</span>
+                        </Link>
+                    </Menu.Item>
                     <SubMenu title={
                         <span>
                             <Icon type="read" />
