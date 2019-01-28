@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { play, pause, setSrc, setVolume } from '../../../_actions/MusicPlayerActions';
 import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 
@@ -10,47 +12,54 @@ class Play extends Component{
         this.play=this.play.bind(this);
         this.pause=this.pause.bind(this);
         this.unpause=this.unpause.bind(this);
+        this.state={
+            stateVolume: 0.5
+        }
     }
     
     async play(){
-        let { songList, songNumber, play, pause, src, setSrc } = this.props;
-        if(!songList[songNumber]){
+        let { play, setSrc, audio } = this.props;
+        if(!this.props.songList[this.props.songNumber]){
             return;
         }
-        let currSrc = "http://localhost:5000" + songList[songNumber].file_url.split(" ").join("%20");
-        if(src !== currSrc){
-            this.props.audio.src = currSrc;
+        let currSrc = "http://localhost:5000" + this.props.songList[this.props.songNumber].file_url.split(" ").join("%20");
+        if(this.props.src !== currSrc){
             setSrc(currSrc);
         }
-        if(this.props.audio.paused){
-            this.props.audio.play();
+        if(audio.paused){
+            play(); // sets the state in redux
             this.unpause();
-            await play(); // sets the state in redux
         }else{
+            //one sets the pause for store state, the other sets the audio
             this.pause();
-            await pause();
         }
     }
 
     async pause(){
+        let { audio, setVolume, pause } = this.props;
+        this.setState({
+            volume: audio.volume
+        });
         let interval = setInterval(()=>{
-            if(this.props.audio.volume > 0.1){
-                this.props.audio.volume -= 0.1;
+            if(audio.volume > 0.05){
+                setVolume(audio.volume - 0.05);
             }else{
                 clearInterval(interval);
-                this.props.audio.pause();
+                pause();
             }
-        }, 8);
+        }, 11);
     }
 
     async unpause(){
+        let { audio, setVolume } = this.props;
+        let { stateVolume } = this.state;
         let interval = setInterval(()=>{
-            if(this.props.audio.volume < this.props.volume){
-                this.props.audio.volume += 0.1;
+            if(audio.volume < stateVolume){
+                setVolume(audio.volume + 0.05);
             }else{
                 clearInterval(interval);
             }
-        }, 8);
+        }, 11);
     }
 
     render(){
@@ -62,14 +71,35 @@ class Play extends Component{
 
 Play.propTypes={
     audio: PropTypes.object,
-    play: PropTypes.func,
-    pause: PropTypes.func,
     songList: PropTypes.array,
     src: PropTypes.string,
-    setSrc: PropTypes.func,
     songNumber: PropTypes.number,
     playing: PropTypes.bool,
     paused: PropTypes.bool
 }
 
-export default Play;
+const mapStateToProps = state => ({
+    audio: state.music.audio,
+    songList: state.music.songList,
+    songNumber: state.music.songNumber,
+    paused: state.music.paused,
+    playing: state.music.playing,
+    src: state.music.src
+});
+
+const mapDispatchToProps = dispatch => ({
+    pause: () => {
+        dispatch(pause());
+    },
+    play: () => {
+        dispatch(play());
+    },
+    setSrc: (src) => {
+        dispatch(setSrc(src));
+    },
+    setVolume: (volume) => {
+        dispatch(setVolume(volume));
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Play);

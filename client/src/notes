@@ -1,9 +1,11 @@
 add function of adding songs to playlist on songs
 see what is the end product after downloading a song
 mobile friendly
-finish prev and loop button
-fix play and pause button 
+loop button
+fix the buttons so that they work with themselves with connect
 separate the musicplayer file
 fix naming conventions 
 add proptypes
 test files
+
+add users and passport

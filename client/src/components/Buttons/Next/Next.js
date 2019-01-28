@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { nextSong, setSrc, play, setAudio } from '../../../_actions/MusicPlayerActions';
 import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 
@@ -10,17 +12,23 @@ class Next extends Component{
         this.next=this.next.bind(this);
     }
 
+    //sets music player to play next song (required to play next song)
+    //but is an extra eventlistener
+    async componentDidMount(){ 
+        await this.props.setAudio(new Audio());
+        this.props.audio.addEventListener('ended', this.next);
+    }
+
     async next(){
-        let { nextSong, audio, play, setSrc } = this.props;
+        let { nextSong, play, setSrc } = this.props;
         await nextSong();
 
+        //sets the src if src is different
         let currSrc = "http://localhost:5000" + this.props.songList[this.props.songNumber].file_url.split(" ").join("%20");
         if(this.props.src !== currSrc){
-            this.props.audio.src = currSrc;
             await setSrc(currSrc);
         }
         play();
-        audio.play();
     }
 
     render(){
@@ -31,13 +39,32 @@ class Next extends Component{
 }
 
 Next.propTypes={
-    nextSong: PropTypes.func,
     audio: PropTypes.object,
-    play: PropTypes.func,
-    setSrc: PropTypes.func,
     src: PropTypes.string,
     songList: PropTypes.array,
     songNumber: PropTypes.number
 }
 
-export default Next;
+const mapStateToProps = state => ({
+    audio: state.music.audio,
+    src: state.music.src,
+    songList: state.music.songList,
+    songNumber: state.music.songNumber
+});
+
+const mapDispatchToProps = dispatch => ({
+    nextSong: () => {
+        dispatch(nextSong());
+    },
+    play: () => {
+        dispatch(play());
+    },
+    setSrc: (src) => {
+        dispatch(setSrc(src));
+    },
+    setAudio: (audio) => {
+        dispatch(setAudio(audio));
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Next);

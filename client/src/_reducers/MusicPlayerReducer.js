@@ -1,6 +1,7 @@
-import { SET_SONG_AND_LIST, PLAY_MUSIC, STOP_MUSIC, PAUSE_MUSIC, NEXT_SONG, PREVIOUS_SONG, LOOP_SONG } from '../_actions/types';
+import { SET_SONG_AND_LIST, PLAY_MUSIC, STOP_MUSIC, PAUSE_MUSIC, NEXT_SONG, PREVIOUS_SONG, LOOP_SONG, SET_AUDIO, SET_SRC, SET_VOLUME } from '../_actions/types';
 
 let initialState = {
+    audio: null,
     playing: false,
     paused: true,
     songList: [],
@@ -10,6 +11,26 @@ let initialState = {
 
 export default function(state=initialState, action){
     switch(action.type){
+        case SET_VOLUME:
+            if(state.audio){
+                state.audio.volume = action.volume;
+            }
+            return {
+                ...state
+            }
+        case SET_SRC:
+            if(state.audio){
+                state.audio.src = action.src
+            }
+            return {
+                ...state,
+                src: action.src
+            }
+        case SET_AUDIO:
+            return {
+                ...state,
+                audio: action.audio
+            }
         case SET_SONG_AND_LIST:
             return {
                 ...state,
@@ -17,18 +38,28 @@ export default function(state=initialState, action){
                 songNumber: action.songNumber
             }
         case PLAY_MUSIC:
+            if(state.audio){
+                state.audio.play();
+            }
             return {
                 ...state,
                 playing: true,
                 paused: false,
             }
         case STOP_MUSIC:
+            if(state.audio){
+                state.audio.currentTime=0;
+                state.audio.pause();
+            }
             return{
                 ...state,
                 playing: false,
                 paused: true
             }
         case PAUSE_MUSIC:
+            if(state.audio){
+                state.audio.pause();
+            }
             return{
                 ...state,
                 playing: true,
@@ -40,6 +71,7 @@ export default function(state=initialState, action){
                 songNumber: (state.songNumber + 1 > state.songList.length - 1) ? 0 : ++state.songNumber
             }
         case PREVIOUS_SONG:
+        console.log("previousSong");
             return{
                 ...state,
                 songNumber: state.songNumber - 1 < 0 ? state.songList.length - 1 : --state.songNumber

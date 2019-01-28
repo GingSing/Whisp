@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { play, pause, nextSong, prevSong } from '../_actions/MusicPlayerActions';
+import { setAudio } from '../_actions/MusicPlayerActions';
 
 import { MusicPlayer } from '../components';
 
@@ -21,17 +21,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    play:() => {
-        dispatch(play());
-    },
-    pause:() => {
-        dispatch(pause());
-    },
-    nextSong:() => {
-        dispatch(nextSong());
-    },
-    prevSong:() => {
-        dispatch(prevSong());
+    setAudio: (audio) => {
+        dispatch(setAudio(audio));
     }
 });
 
