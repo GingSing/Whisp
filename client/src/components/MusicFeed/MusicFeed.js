@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
-import { Icon, Dropdown, Button, Menu } from 'antd';
+import { Icon, Dropdown, Menu} from 'antd';
 import PropTypes from 'prop-types';
 
 import 'antd/lib/date-picker/style/css'; 
 import './MusicFeed.css';
 
+const SubMenu = Menu.SubMenu;
+
 class MusicFeed extends Component{
 
     render(){
-        let { songList, handleClick, playSong } = this.props;
+        let { songList, handleClick, playSong, addSongToPlaylist, addSongToFavorites, playlists } = this.props;
         return(
             <div className="musicFeed">
                 <ul className="musicFeedList">
                     <li>
                         <div className="listTopics">
                             <span></span>
-                            <span>Name</span>
-                            <span>Artist</span>
-                            <span>Length</span>
+                            <div className="listTopicNames">
+                                <span>Name</span>
+                                <span>Artist</span>
+                                <span>Length(s)</span>
+                            </div>
+                            <span>Options</span>
                         </div>
                     </li>
                     {
@@ -29,7 +34,10 @@ class MusicFeed extends Component{
                                     handleClick={handleClick} 
                                     songNumber={key} 
                                     songList={songList} 
-                                    playSong={playSong}/>
+                                    playSong={playSong}
+                                    addSongToPlaylist={addSongToPlaylist}
+                                    addSongToFavorites={addSongToFavorites}
+                                    playlists={playlists}/>
                             </li>
                             );
                         })
@@ -40,8 +48,8 @@ class MusicFeed extends Component{
     }
 }
 
-const FeedCard = ({data, songNumber, songList, handleClick, playSong}) => {
-    let { name, artist, length_seconds } = data;
+const FeedCard = ({data, songNumber, songList, handleClick, playSong, addSongToPlaylist, addSongToFavorites, playlists}) => {
+    let { _id, name, artist, length_seconds } = data;
     return(
         <div className="feedCardContainer">
             <button className="feedCardPlay" onClick={() => {playSong(songNumber, songList)}}>{<Icon type="caret-right" />}</button>
@@ -50,27 +58,36 @@ const FeedCard = ({data, songNumber, songList, handleClick, playSong}) => {
                 <span>{artist} </span>
                 <span>{length_seconds}</span>
             </div>
-            <Dropdown overlay={FeedCardMenu} placement="topLeft"><Button>...</Button></Dropdown>
+            <Dropdown trigger={["click"]} overlay={()=>FeedCardMenu(_id, addSongToPlaylist, addSongToFavorites, playlists)} placement="bottomLeft"><span>...</span></Dropdown>
         </div>
     );
 }
 
-const FeedCardMenu = (
-    <Menu>
-        <Menu.Item>
-            Add To Favorites
-        </Menu.Item>
-        <Menu.Item>
-            Add To Playlist 
-        </Menu.Item>
-    </Menu>
-)
+const FeedCardMenu = (songId, addSongToPlaylist, addSongToFavorites, playlists) => {
+    return (
+        <Menu>
+            <Menu.Item>
+                <button className="favoritesBtn" onClick={() => {addSongToFavorites(songId)}}>Add To Favorites</button>
+            </Menu.Item>
+            <SubMenu title="Add To Playlist">
+                {playlists && playlists.map((playlist, key) => {
+                    return <Menu.Item key={key} onClick={() => {addSongToPlaylist(songId, playlist.name)}}>
+                        {playlist.name}
+                    </Menu.Item>
+                })}
+            </SubMenu>
+        </Menu>
+    );
+}
 
 MusicFeed.propTypes={
     songList: PropTypes.array,
     handleClick: PropTypes.func,
     playSong: PropTypes.func,
-    paused: PropTypes.bool
+    paused: PropTypes.bool,
+    playlists: PropTypes.array,
+    addSongToPlaylist: PropTypes.func,
+    addSongToFavorites: PropTypes.func
 }
 
 FeedCard.propTypes={
@@ -79,7 +96,10 @@ FeedCard.propTypes={
     songList: PropTypes.array,
     handleClick: PropTypes.func,
     playSong: PropTypes.func,
-    paused: PropTypes.bool
+    paused: PropTypes.bool,
+    playlists: PropTypes.array,
+    addSongToFavorites: PropTypes.func,
+    addSongToPlaylist: PropTypes.func
 }
 
 export default MusicFeed;

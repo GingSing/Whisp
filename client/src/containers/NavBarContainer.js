@@ -55,7 +55,7 @@ class NavBarContainer extends Component{
         }
         return(
             <React.Fragment>
-                <NavBar showModal={this.showModal} addPlaylist={this.props.addPlaylist} playlists={this.props.userInfo ? this.props.userInfo.playlists : []} />
+                <NavBar showModal={this.showModal} addPlaylist={this.props.addPlaylist} playlists={this.props.playlists ? this.props.playlists : []} />
                 <Modal
                 style={style}
                 visible={this.state.visible}
@@ -71,7 +71,7 @@ class NavBarContainer extends Component{
 }
 
 const mapStateToProps = state => ({
-    userInfo: state.user.userInfo,
+    playlists: state.user.playlists,
     addingPlaylist: state.user.addingPlaylist
 });
 

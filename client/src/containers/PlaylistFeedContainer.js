@@ -10,6 +10,7 @@ class PlaylistFeedContainer extends Component{
     }
 
     render(){
+        console.log(playlists);
         let { playlists, songNumber } = this.props;
         return(
             <React.Fragment>
@@ -20,8 +21,7 @@ class PlaylistFeedContainer extends Component{
 }
 
 const mapStateToProps = state => ({
-    playlists: state.user.userInfo.playlists,
-    userInfo: state.user.userInfo
+    playlists: state.user.playlists
 });
 
 const mapDispatchToProps = dispatch => ({

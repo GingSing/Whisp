@@ -12,10 +12,10 @@ router.get('/getUser', userService.getUser);
 router.post('/addPlaylist', userService.addPlaylist);
 
 //adds a song to any playlist (requires: song_id and playlist_name; should i change it to playlist id?)
-router.post('/addSongToPlaylist', userService.addSongToPlaylist);
+router.put('/addSongToPlaylist', userService.addSongToPlaylist);
 
 //adds a song to the favorites list (requires: song_id)
-router.post('/addSongToFavorites', userService.addSongToFavorites);
+router.put('/addSongToFavorites', userService.addSongToFavorites);
 
 router.post('/removeSongFromPlaylist', userService.removeSongFromPlayList);
 

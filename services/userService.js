@@ -55,7 +55,8 @@ const addSongToPlaylist = (req, res) => {
             selected_playlist[0].songs.push(song_id);
             user.save(()=>{
                 user.populate('playlists.songs', (err)=>{
-                    res.status(200).json(user);
+                    console.log(user.playlists);
+                    res.status(200).json(user.playlists);
                 });
             });
         })

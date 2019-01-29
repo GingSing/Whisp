@@ -23,7 +23,6 @@ class MusicPlayer extends Component{
 
     handleVolumeChange(value){
         this.props.setVolume(value/100);
-        console.log(value/100);
     }
 
     timeFormatter(timeInSeconds){

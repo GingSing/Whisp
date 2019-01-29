@@ -10,6 +10,9 @@ class Next extends Component{
     constructor(props){
         super(props);
         this.next=this.next.bind(this);
+        this.state={
+            removed: false
+        }
     }
 
     //sets music player to play next song (required to play next song)
@@ -17,6 +20,15 @@ class Next extends Component{
     async componentDidMount(){ 
         await this.props.setAudio(new Audio());
         this.props.audio.addEventListener('ended', this.next);
+    }
+
+    async shouldComponentUpdate(newProps){
+        if(newProps.loop === true && this.state.removed === false){
+            await this.props.audio.removeEventListener('ended', this.next);
+            this.setState({
+                removed: true
+            });
+        }
     }
 
     async next(){
@@ -51,7 +63,8 @@ Next.propTypes={
     src: PropTypes.string,
     songList: PropTypes.array,
     songNumber: PropTypes.number,
-    userVolume: PropTypes.number
+    userVolume: PropTypes.number,
+    loop: PropTypes.bool
 }
 
 const mapStateToProps = state => ({
@@ -59,7 +72,8 @@ const mapStateToProps = state => ({
     src: state.music.src,
     songList: state.music.songList,
     songNumber: state.music.songNumber,
-    userVolume: state.music.userVolume
+    userVolume: state.music.userVolume,
+    loop: state.music.loop
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getSongList } from '../_actions/SongListActions';
 import { setSong, setSrc, play, pause, setVolume } from '../_actions/MusicPlayerActions';
+import { addSongToFavorites, addSongToPlaylist } from '../_actions/UserActions';
 import { connect } from 'react-redux';
 import { MusicFeed } from '../components';
 import { Icon } from 'antd'
@@ -53,6 +54,9 @@ class MusicFeedContainer extends Component{
                         songList={this.props.songList} 
                         handleClick={this.handleClick} 
                         playSong={this.playSong}
+                        playlists={this.props.playlists}
+                        addSongToFavorites={this.props.addSongToFavorites}
+                        addSongToPlaylist={this.props.addSongToPlaylist}
                     />
                 }
             </div>
@@ -66,7 +70,8 @@ const mapStateToProps = state => ({
     songList: state.songList.songList,
     songNumber: state.music.songNumber,
     gettingSongList: state.songList.gettingSongList,
-    userVolume: state.music.userVolume
+    userVolume: state.music.userVolume,
+    playlists: state.user.playlists
 })
 
 const mapDispatchtoProps = dispatch => ({
@@ -87,7 +92,14 @@ const mapDispatchtoProps = dispatch => ({
     },
     setVolume: (volume) => {
         dispatch(setVolume(volume));
+    },
+    addSongToFavorites: (songId) => {
+        dispatch(addSongToFavorites(songId));
+    },
+    addSongToPlaylist: (songId, playlistName) =>{
+        dispatch(addSongToPlaylist(songId, playlistName));
     }
+
 })
 
 export default connect(mapStateToProps, mapDispatchtoProps)(MusicFeedContainer);

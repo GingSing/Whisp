@@ -39,6 +39,7 @@ class Loop extends Component{
             }
             this.props.audio.addEventListener('ended', async() => {
                 await this.props.nextSong();
+                console.log("eventadded");
                 this.props.play();
             });
         }

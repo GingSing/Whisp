@@ -13,12 +13,14 @@ class Home extends Component{
                     <h1 className="homeTitle">Whisp</h1>
                     <YoutubeInputContainer />
                     {/* make this into a list so that it can show multiple */}
+                    { metaData ? 
                     <div className="downloading">
                         <span>Title: {metaData.title}</span>
                         <span>Author: {metaData.author_name}</span>
                         <span>url: {metaData.url}</span>
                         <img src={metaData.thumbnail_url} alt=""/>
-                    </div>
+                    </div> : null
+                    }
                 </div>
             </div>
         );
