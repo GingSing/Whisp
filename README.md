@@ -1,6 +1,6 @@
 # Whisp
 
-Personal project for downloading and listening to music from youtube.
+Personal project for downloading and listening to music from youtube. This app was made for personal use and not to be used for downloading copyrighted works.
 
 The point of this project is so that users can listen to songs from youtube that might be appear on spotify or other popular music streaming apps.
 Although many music apps boast a large amount of media access, there are still times at which a user may want to listen to songs that their favorite youtube creator has made or a song that isn't popular enough to put itself onto their radars. Users will be able to download these songs and have it saved on a remote server or their own personal computers.

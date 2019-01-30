@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class DownloadedList extends Component{
     render(){
         return(
-            <div className="downloadedList">
+            <div className="downloadedListWrapper">
+                <ul className="downloadedList">
+                    {
 
+                    }
+                </ul>
             </div>
         );
     }
 }
 
-export default DownloadedList;
+const mapStateToProps = state => ({
+    downloaded: state.youtube.downloaded
+})
+
+export default connect(mapStateToProps)(DownloadedList);
