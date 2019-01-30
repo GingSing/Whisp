@@ -7,7 +7,7 @@ class Playlist extends Component{
         let { key } = this.props.match.params;
         return(
             <div className="playlist"> 
-                <PlaylistFeedContainer songNumber={key}/>
+                <PlaylistFeedContainer isNotSongs={true} songNumber={key}/>
             </div>
         );
     }

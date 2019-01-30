@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -54,10 +54,12 @@ class NavBar extends Component{
                             playlists && playlists.map((playlist, key) => {
                                 return (
                                 <Menu.Item key={key}>
+                                    <Tooltip placement="right" title={playlist.name}>
                                     <Link to={`/playlists/${key}`}>
                                         <Icon type="book" />
-                                        <span>{playlist.name}</span>
+                                        <span>{playlist.name.length > 11 ?`${playlist.name.slice(0, 11)}...`: playlist.name}</span>
                                     </Link>
+                                    </Tooltip>
                                 </Menu.Item>
                                 );
                             })

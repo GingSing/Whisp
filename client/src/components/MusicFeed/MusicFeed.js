@@ -8,9 +8,19 @@ import './MusicFeed.css';
 const SubMenu = Menu.SubMenu;
 
 class MusicFeed extends Component{
-
     render(){
-        let { songList, handleClick, playSong, addSongToPlaylist, addSongToFavorites, playlists } = this.props;
+        //isNotSongs checks if it is not song page to limit remove functionality
+        let { songList, 
+            playlists, 
+            isNotSongs,
+            songNumber,
+            handleClick, 
+            playSong, 
+            addSongToPlaylist, 
+            addSongToFavorites, 
+            removeSongFromPlaylist,
+            removeSongFromFavorites
+             } = this.props;
         return(
             <div className="musicFeed">
                 <ul className="musicFeedList">
@@ -20,7 +30,7 @@ class MusicFeed extends Component{
                             <div className="listTopicNames">
                                 <span>Name</span>
                                 <span>Artist</span>
-                                <span>Length(s)</span>
+                                <span>Length</span>
                             </div>
                             <span>Options</span>
                         </div>
@@ -37,7 +47,11 @@ class MusicFeed extends Component{
                                     playSong={playSong}
                                     addSongToPlaylist={addSongToPlaylist}
                                     addSongToFavorites={addSongToFavorites}
-                                    playlists={playlists}/>
+                                    playlists={playlists}
+                                    isNotSongs={isNotSongs}
+                                    removeSongFromFavorites={removeSongFromFavorites}
+                                    removeSongFromPlaylist={removeSongFromPlaylist}
+                                    playlistNumber={songNumber}/>
                             </li>
                             );
                         })
@@ -48,34 +62,68 @@ class MusicFeed extends Component{
     }
 }
 
-const FeedCard = ({data, songNumber, songList, handleClick, playSong, addSongToPlaylist, addSongToFavorites, playlists}) => {
-    let { _id, name, artist, length_seconds } = data;
+const FeedCard = (props) => {
+
+    let {data, 
+        songNumber, 
+        songList, 
+        handleClick, 
+        playSong, 
+        addSongToPlaylist, 
+        addSongToFavorites, 
+        playlists, 
+        removeSongFromFavorites, 
+        removeSongFromPlaylist, 
+        isNotSongs,
+        playlistNumber } = props;
+
+    let { _id, 
+        name, 
+        artist, 
+        length_seconds } = data;
+
+    function timeFormatter(timeInSeconds){
+        let minutes = Math.floor(timeInSeconds/60);
+        let seconds = (timeInSeconds%60).toFixed(0);
+        let secondsFixer = seconds > 10 ? seconds : "0" + seconds;
+        return `${minutes}:${secondsFixer}`;
+    }
+
     return(
         <div className="feedCardContainer">
             <button className="feedCardPlay" onClick={() => {playSong(songNumber, songList)}}>{<Icon type="caret-right" />}</button>
             <div className="feedCard" onClick={() => {handleClick(songNumber, songList)}}>
                 <span>{name} </span>
                 <span>{artist} </span>
-                <span>{length_seconds}</span>
+                <span>{timeFormatter(length_seconds)}</span>
             </div>
-            <Dropdown trigger={["click"]} overlay={()=>FeedCardMenu(_id, addSongToPlaylist, addSongToFavorites, playlists)} placement="bottomLeft"><span>...</span></Dropdown>
+            <Dropdown trigger={["click"]} overlay={()=>FeedCardMenu(_id, addSongToPlaylist, addSongToFavorites, playlists, removeSongFromPlaylist, removeSongFromFavorites, isNotSongs, playlistNumber)} placement="bottomLeft"><span>...</span></Dropdown>
         </div>
     );
 }
 
-const FeedCardMenu = (songId, addSongToPlaylist, addSongToFavorites, playlists) => {
+const FeedCardMenu = (songId, addSongToPlaylist, addSongToFavorites, playlists, removeSongFromPlaylist, removeSongFromFavorites, isNotSongs, playlistNumber) => {
     return (
         <Menu>
-            <Menu.Item>
-                <button className="favoritesBtn" onClick={() => {addSongToFavorites(songId)}}>Add To Favorites</button>
-            </Menu.Item>
-            <SubMenu title="Add To Playlist">
-                {playlists && playlists.map((playlist, key) => {
-                    return <Menu.Item key={key} onClick={() => {addSongToPlaylist(songId, playlist.name)}}>
-                        {playlist.name}
-                    </Menu.Item>
-                })}
-            </SubMenu>
+            { isNotSongs ? null :
+                <Menu.Item>
+                    <button className="feedCardMenuBtn" onClick={() => {addSongToFavorites(songId)}}>Add To Favorites</button>
+                </Menu.Item>
+            }
+            { isNotSongs ? null :
+                <SubMenu title="Add To Playlist">
+                    {playlists && playlists.map((playlist, key) => {
+                        return <Menu.Item key={key} onClick={() => {addSongToPlaylist(songId, playlist.name)}}>
+                            {playlist.name}
+                        </Menu.Item>
+                    })}
+                </SubMenu>
+            }
+            { isNotSongs ?
+                <Menu.Item>
+                    <button className="feedCardMenuBtn" onClick={() => {removeSongFromPlaylist(songId, playlists[playlistNumber].name)}}>Remove From List</button>
+                </Menu.Item> : null
+            }
         </Menu>
     );
 }
@@ -91,7 +139,6 @@ MusicFeed.propTypes={
 }
 
 FeedCard.propTypes={
-    data: PropTypes.object,
     songNumber: PropTypes.number,
     songList: PropTypes.array,
     handleClick: PropTypes.func,

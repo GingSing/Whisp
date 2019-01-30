@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { play, prevSong, setSrc, stop } from '../../../_actions/MusicPlayerActions';
+import { play, prevSong, setSrc, stop, setVolume, setUserVolume } from '../../../_actions/MusicPlayerActions';
 import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 
@@ -25,6 +25,16 @@ class Prev extends Component{
                 await setSrc(currSrc);
             }
             play();
+            //increases volume if paused decreased volume
+            let { setVolume } = this.props;
+            let interval = setInterval(()=>{
+                if(audio.volume < this.props.userVolume){
+                    setVolume(audio.volume + 0.05);
+                }else{
+                    clearInterval(interval);
+                }
+            }, 11);
+            
         }
     }
 
@@ -39,14 +49,16 @@ Prev.propTypes={
     audio: PropTypes.object,
     src: PropTypes.string,
     songList: PropTypes.array,
-    songNumber: PropTypes.number
+    songNumber: PropTypes.number,
+    userVolume: PropTypes.number
 }
 
 const mapStateToProps = state => ({
     audio: state.music.audio,
     src: state.music.src,
     songList: state.music.songList,
-    songNumber: state.music.songNumber
+    songNumber: state.music.songNumber,
+    userVolume: state.music.userVolume
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -61,6 +73,12 @@ const mapDispatchToProps = dispatch => ({
     },
     stop: () => {
         dispatch(stop());
+    },
+    setVolume: (volume) => {
+        dispatch(setVolume(volume));
+    },
+    setUserVolume: (volume) => {
+        dispatch(setUserVolume(volume));
     }
 })
 

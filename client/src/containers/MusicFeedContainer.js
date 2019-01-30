@@ -41,11 +41,11 @@ class MusicFeedContainer extends Component{
 
     render(){
         return(
-            <div className="musicFeedContainer">
+            <div className="musicFeedContainer" style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center'}}>
                 {
                     this.props.gettingSongList ? 
                     <Icon 
-                        style={{fontSize: 100}} 
+                        style={{fontSize: 100, marginTop: '30vh'}} 
                         type="loading" 
                         spin 
                     /> 

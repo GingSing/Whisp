@@ -33,8 +33,7 @@ class Play extends Component{
     }
 
     async pause(){
-        let { audio, setVolume, pause, setUserVolume } = this.props;
-        setUserVolume(audio.volume);
+        let { audio, setVolume, pause } = this.props;
         let interval = setInterval(()=>{
             if(audio.volume > 0.05){
                 setVolume(audio.volume - 0.05);

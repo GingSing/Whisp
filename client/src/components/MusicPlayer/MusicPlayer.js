@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Avatar, Skeleton, Icon, Slider, } from 'antd';
-import { setVolume } from '../../_actions/MusicPlayerActions';
+import {Avatar, Skeleton, Slider, } from 'antd';
+import { setVolume, setUserVolume } from '../../_actions/MusicPlayerActions';
 import { connect } from 'react-redux';
 import { Play, Next, Prev, Loop } from '../Buttons';
 import ProgressBar from '../ProgressBar';
@@ -23,6 +23,7 @@ class MusicPlayer extends Component{
 
     handleVolumeChange(value){
         this.props.setVolume(value/100);
+        this.props.setUserVolume(value/100);
     }
 
     timeFormatter(timeInSeconds){
@@ -31,7 +32,6 @@ class MusicPlayer extends Component{
         let secondsFixer = seconds > 10 ? seconds : "0" + seconds;
         return `${minutes}:${secondsFixer}`;
     }
-
 
     render(){
         let { songList, songNumber } = this.props;
@@ -96,6 +96,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setVolume: (volume) => {
         dispatch(setVolume(volume));
+    },
+    setUserVolume: (volume) => {
+        dispatch(setUserVolume(volume));
     }
 })
 

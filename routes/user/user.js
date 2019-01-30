@@ -17,8 +17,8 @@ router.put('/addSongToPlaylist', userService.addSongToPlaylist);
 //adds a song to the favorites list (requires: song_id)
 router.put('/addSongToFavorites', userService.addSongToFavorites);
 
-router.post('/removeSongFromPlaylist', userService.removeSongFromPlayList);
+router.delete('/removeSongFromPlaylist', userService.removeSongFromPlayList);
 
-router.post('/removeSongFromFavorites', userService.removeSongFromFavorites);
+router.delete('/removeSongFromFavorites', userService.removeSongFromFavorites);
 
 module.exports = router;

@@ -1,4 +1,3 @@
-add function of adding songs to playlist on songs
 see what is the end product after downloading a song
 mobile friendly
 fix naming conventions 
@@ -7,9 +6,12 @@ test files
 add users and passport
 make favourites page functional
 make home box into a list so can show multiple songs being downloaded
+remove playlists
 
 DONELIST
 loop button
 separate the musicplayer file
 add proptypes
 fix the buttons so that they work with themselves with connect
+add function of adding songs to playlist
+add function of removing songs from playlist

@@ -53,12 +53,12 @@ const addSongToPlaylist = (req, res) => {
         .then(user => {
             let selected_playlist = user.playlists.filter(playlist => playlist.name === playlist_name);
             selected_playlist[0].songs.push(song_id);
-            user.save(()=>{
-                user.populate('playlists.songs', (err)=>{
-                    console.log(user.playlists);
-                    res.status(200).json(user.playlists);
+            user.save();
+            User.findOne({_id: MLAB_USER_ID})
+                .populate('playlists.songs')
+                .then(savedUser => {
+                    res.status(200).json(savedUser.playlists);
                 });
-            });
         })
         .catch(err => {
             console.log(err);
@@ -72,7 +72,7 @@ const addSongToFavorites = (req, res) => {
         .then(user => {
             user.favorites.push(song_id);
             user.save();
-            res.status(200).json(user);
+            res.status(200).json(user.favorites);
         })
         .catch(err => {
             console.log(err);
@@ -86,11 +86,12 @@ const removeSongFromPlayList = (req, res) => {
         .then(user => {
             let selected_playlist = user.playlists.filter(playlist => playlist.name === playlist_name);
             selected_playlist[0].songs.pop(song_id);
-            user.save(()=>{
-                user.populate('playlists.songs', (err)=>{
-                    res.status(200).json(user);
+            user.save();
+            User.findOne({_id: MLAB_USER_ID})
+                .populate('playlists.songs')
+                .then(savedUser => {
+                    res.status(200).json(savedUser.playlists);
                 });
-            });
         })
         .catch(err => {
             console.log(err);
@@ -104,7 +105,7 @@ const removeSongFromFavorites = (req, res) => {
         .then(user => {
             user.favorites.pop(song_id);
             user.save();
-            res.status(200).json(user);
+            res.status(200).json(user.favorites);
         })
         .catch(err => {
             console.log(err);

@@ -4,12 +4,10 @@ import { GET_USER_INFO_FAILURE,
     ADD_PLAYLIST_FAILURE, 
     ADD_PLAYLIST_REQUEST, 
     ADD_PLAYLIST_SUCCESS, 
-    ADD_SONG_TO_PLAYLIST_FAILURE, 
-    ADD_SONG_TO_PLAYLIST_REQUEST, 
     ADD_SONG_TO_PLAYLIST_SUCCESS,
-    ADD_SONG_TO_FAVORITES_REQUEST,
     ADD_SONG_TO_FAVORITES_SUCCESS,
-    ADD_SONG_TO_FAVORITES_FAILURE } from './types';
+    REMOVE_SONG_FROM_FAVORITES_SUCCESS,
+    REMOVE_SONG_FROM_PLAYLIST_SUCCESS } from './types';
 import { UserService } from '../_services';
 
 export function getUserInfo(){
@@ -49,30 +47,44 @@ export function addPlaylist(playlistName){
 
 export function addSongToPlaylist(songId, playlistName){
     return dispatch => {
-        dispatch(request());
         UserService.addSongToPlaylist(songId, playlistName)
             .then((playlists)=>dispatch(success(playlists)))
             .catch(err => {
-                dispatch(failure());
                 console.log(err);
             });
         }
-    function request(){ return { type: ADD_SONG_TO_PLAYLIST_REQUEST }}
     function success(playlists){ return { type: ADD_SONG_TO_PLAYLIST_SUCCESS, playlists }}
-    function failure(){ return { type: ADD_SONG_TO_PLAYLIST_FAILURE }}
 }
 
 export function addSongToFavorites(songId){
     return dispatch => {
-        dispatch(request());
         UserService.addSongToFavorites(songId)
             .then((favorites) => {dispatch(success(favorites))})
             .catch(err => {
-                dispatch(failure());
                 console.log(err);
             });
     }
-    function request(){ return { type: ADD_SONG_TO_FAVORITES_REQUEST }}
     function success(favorites){ return { type: ADD_SONG_TO_FAVORITES_SUCCESS, favorites }}
-    function failure(){ return { type: ADD_SONG_TO_FAVORITES_FAILURE }}
+}
+
+export function removeSongFromPlaylist(songId, playlistName){
+    return dispatch => {
+        UserService.removeSongFromPlaylist(songId, playlistName)
+            .then((playlists) => {console.log(playlists);dispatch(success(playlists))})
+            .catch(err => {
+                console.log(err);
+            });
+    }
+    function success(playlists){ return { type: REMOVE_SONG_FROM_PLAYLIST_SUCCESS, playlists }}
+}
+
+export function removeSongFromFavorites(songId){
+    return dispatch => {
+        UserService.removeSongFromFavorites(songId)
+            .then((favorites) => {dispatch(success(favorites))})
+            .catch(err => {
+                console.log(err);
+            });
+    }
+    function success(favorites){ return { type:REMOVE_SONG_FROM_FAVORITES_SUCCESS, favorites }}
 }

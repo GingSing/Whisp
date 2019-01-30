@@ -19,7 +19,7 @@ export default function(state=initialState, action){
             }
         case SET_VOLUME:
             if(state.audio){
-                state.audio.volume = action.volume;
+                state.audio.volume = action.volume > 1 ? 1 : action.volume;
             }
             return {
                 ...state

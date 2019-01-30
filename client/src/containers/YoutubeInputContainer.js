@@ -53,7 +53,7 @@ class YoutubeInputContainer extends Component{
 
     render(){
         return(
-            <React.Fragment>
+            <React.Fragment >
                 <YoutubeInput showModal={this.showModal} />
                 <Modal
                     title="Meta Data"

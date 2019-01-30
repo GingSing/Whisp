@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setSong } from '../_actions/MusicPlayerActions';
+import { removeSongFromPlaylist } from '../_actions/UserActions';
 import { MusicFeed } from '../components';
 
 class PlaylistFeedContainer extends Component{
@@ -10,11 +11,10 @@ class PlaylistFeedContainer extends Component{
     }
 
     render(){
-        console.log(playlists);
-        let { playlists, songNumber } = this.props;
+        let { playlists, songNumber} = this.props;
         return(
             <React.Fragment>
-                <MusicFeed songList={playlists ? playlists[songNumber].songs : null} handleClick={this.handleClick.bind(this)} />
+                <MusicFeed songList={playlists ? playlists[songNumber].songs : null} handleClick={this.handleClick.bind(this)} {...this.props}/>
             </React.Fragment>
         );
     }
@@ -27,6 +27,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     setSong: (songNumber, songList) => {
         dispatch(setSong(songNumber, songList));
+    },
+    removeSongFromPlaylist: (songId, playlistName) => {
+        dispatch(removeSongFromPlaylist(songId, playlistName));
     }
 });
 
