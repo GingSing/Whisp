@@ -2,6 +2,8 @@ import { DOWNLOAD_SONG_FAILURE, DOWNLOAD_SONG_REQUEST, DOWNLOAD_SONG_SUCCESS } f
 
 let initialState = {
     metaData: null,
+    //made for looking at all downloaded content
+    downloaded: [],
     downloadingSong: false,
     downloadedSong: false
 }
