@@ -37,4 +37,4 @@ This project uses: ReactJS + Redux + Ant Design in the front end and NodeJS + Mo
 
 # Images of Project
 
-![Alt text](https://imgur.com/a/RQWipUi)
+https://imgur.com/a/RQWipUi
