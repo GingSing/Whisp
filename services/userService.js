@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const MLAB_USER_ID = process.env.MLAB_USER_ID || require('../config').MLAB_USER_ID;
+const MLAB_USER_ID = process.env.MLAB_USER_ID;
 
 const getUser = (req, res) => {
     User.findOne({_id: MLAB_USER_ID})

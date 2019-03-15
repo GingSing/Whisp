@@ -1,3 +1,4 @@
+require('dotenv').config()
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -5,7 +6,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
 
-const db = process.env.MONGO_URI || require('./config').MONGO_URI;
+const db = process.env.MONGO_URI
 const PORT = 5000;
 
 const song = require('./routes/api/song');
