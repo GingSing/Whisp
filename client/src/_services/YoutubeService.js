@@ -9,7 +9,7 @@ function downloadSong(url, name, artist){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({url, name, artist})
     };
-    return fetch('http://localhost:5000/api/song/downloadSong', requestOptions)
+    return fetch('/api/song/downloadSong', requestOptions)
         .then(res => res.json())
         .then(data => { return data })
         .catch(err => { throw new Error(err) });

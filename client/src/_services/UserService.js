@@ -8,7 +8,7 @@ export const UserService = {
 }
 
 function getUserInfo(){
-    return fetch('http://localhost:5000/user/getUser')
+    return fetch('/user/getUser')
         .then(res => res.json())
         .then(data => { return data })
         .catch(err => { throw new Error(err) });
@@ -20,7 +20,7 @@ function addPlaylist(playlistName){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({playlist_name: playlistName})
     };
-    return fetch('http://localhost:5000/user/addPlaylist', requestOptions)
+    return fetch('/user/addPlaylist', requestOptions)
         .then(res => res.json())
         .then(data => { return data })
         .catch(err => { throw new Error(err) });
@@ -32,7 +32,7 @@ function addSongToPlaylist(songId, playlistName){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({song_id: songId, playlist_name: playlistName})
     };
-    return fetch('http://localhost:5000/user/addSongToPlaylist', requestOptions)
+    return fetch('/user/addSongToPlaylist', requestOptions)
         .then(res => res.json())
         .then(data => { return data })
         .catch(err => { throw new Error(err) });
@@ -44,7 +44,7 @@ function addSongToFavorites(songId){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ song_id: songId })
     };
-    return fetch('http://localhost:5000/user/addSongToFavorites', requestOptions)
+    return fetch('/user/addSongToFavorites', requestOptions)
         .then(res => res.json())
         .then(data => { return data })
         .catch(err => { throw new Error(err) });
@@ -56,7 +56,7 @@ function removeSongFromPlaylist(songId, playlistName){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ song_id: songId, playlist_name: playlistName })
     };
-    return fetch('http://localhost:5000/user/removeSongFromPlaylist', requestOptions)
+    return fetch('/user/removeSongFromPlaylist', requestOptions)
         .then(res => res.json())
         .then(data => { return data })
         .catch(err => { throw new Error(err) });
@@ -68,7 +68,7 @@ function removeSongFromFavorites(songId){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ song_id: songId })
     };
-    return fetch('http://localhost:5000/user/removeSongFromFavorites', requestOptions)
+    return fetch('/user/removeSongFromFavorites', requestOptions)
         .then(res => res.json())
         .then(data => { return data })
         .catch(err => { throw new Error(err) });
