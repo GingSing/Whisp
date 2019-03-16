@@ -19,7 +19,8 @@ class Play extends Component{
         if(!this.props.songList[this.props.songNumber]){
             return;
         }
-        let currSrc = "/" + this.props.songList[this.props.songNumber].file_url.split(" ").join("%20");
+        //removed /
+        let currSrc = this.props.songList[this.props.songNumber].file_url.split(" ").join("%20");
         if(this.props.src !== currSrc){
             setSrc(currSrc);
         }
