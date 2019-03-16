@@ -7,7 +7,7 @@ const express = require('express');
 const app = express();
 
 const db = process.env.MONGO_URI
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const song = require('./routes/api/song');
 const user = require('./routes/user/user');
