@@ -25,7 +25,7 @@ class MusicFeedContainer extends Component{
     async playSong(songNumber, songList){
         let { audio, setVolume, play, setSong, setSrc } = this.props;
         await setSong(songNumber, songList);
-        let currSrc = "http://localhost:5000" + songList[songNumber].file_url.split(" ").join("%20");
+        let currSrc = "/" + songList[songNumber].file_url.split(" ").join("%20");
         if(audio.src !== currSrc){
             await setSrc(currSrc);
         }
