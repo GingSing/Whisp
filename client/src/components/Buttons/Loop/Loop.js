@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { loopSong, nextSong, play, prevSong } from '../../../_actions/MusicPlayerActions';
+import { loopSong, nextSong, play, prevSong, setSrc } from '../../../_actions/MusicPlayerActions';
 import { Icon } from 'antd';
 import PropTypes from 'prop-types';
 
 import 'antd/dist/antd.css';
 import './Loop.css';
 
+//TODO: FIX
 class Loop extends Component{
     constructor(props){
         super(props);
         this.loop=this.loop.bind(this);
+        this.playNext=this.playNext.bind(this);
         this.state={
             alreadyAdded: false
         }
@@ -22,30 +24,26 @@ class Loop extends Component{
         await loopSong();
 
         if(this.props.loop){
-            if(this.state.alreadyAdded){
-                this.props.audio.removeEventListener('ended', async () => {
-                    await this.props.nextSong();
-                    this.props.play();
-                });
+            if(this.props.alreadyAdded){
+                this.props.audio.removeEventListener('ended', this.playNext);
             }
-            this.props.audio.addEventListener('ended', () => {
-                this.props.play();
-            });
         }else{
-            if(this.state.alreadyAdded){
-                this.props.audio.removeEventListener('ended', () => {
-                    this.props.play();
-                });
-            }
-            this.props.audio.addEventListener('ended', async() => {
-                await this.props.nextSong();
-                console.log("eventadded");
-                this.props.play();
+            this.props.audio.addEventListener('ended', this.playNext);
+            this.setState({
+                alreadyAdded: true
             });
         }
-        !this.state.alreadyAdded && this.setState({
-            alreadyAdded: true
-        });
+    }
+
+    async playNext(){
+        await this.props.nextSong();
+
+        let currSrc = this.props.songList[this.props.songNumber].file_url.split(" ").join("%20");
+        if(this.props.src !== currSrc){
+            await this.props.setSrc(currSrc);
+        }
+
+        this.props.play();
     }
 
     render(){
@@ -83,6 +81,9 @@ const mapDispatchToProps = dispatch => ({
     },
     prevSong: () => {
         dispatch(prevSong());
+    },
+    setSrc: (src) => {
+        dispatch(setSrc(src));
     }
 })
 

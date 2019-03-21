@@ -74,7 +74,7 @@ export default function(state=initialState, action){
         case NEXT_SONG:
             return{
                 ...state,
-                songNumber: (state.songNumber + 1 > state.songList.length - 1) ? 0 : ++state.songNumber
+                songNumber: (state.songNumber + 1 > state.songList.length - 1) ? 0 : state.songNumber + 1
             }
         case PREVIOUS_SONG:
         console.log("previousSong");
@@ -83,6 +83,7 @@ export default function(state=initialState, action){
                 songNumber: state.songNumber - 1 < 0 ? state.songList.length - 1 : --state.songNumber
             }
         case LOOP_SONG:
+            state.audio.loop = !state.audio.loop
             return {
                 ...state,
                 loop: !state.loop

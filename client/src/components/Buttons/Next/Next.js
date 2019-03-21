@@ -36,7 +36,6 @@ class Next extends Component{
         await nextSong();
 
         //sets the src if src is different
-        //removed /
         let currSrc = this.props.songList[this.props.songNumber].file_url.split(" ").join("%20");
         if(this.props.src !== currSrc){
             await setSrc(currSrc);
